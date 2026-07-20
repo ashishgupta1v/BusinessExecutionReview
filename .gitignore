@@ -1,0 +1,10 @@
+# build artifacts / deps (belt-and-suspenders; Laravel .gitignore also covers these)
+**/node_modules/
+**/vendor/
+**/.env
+**/storage/*.key
+execution-cockpit/public/build/
+execution-cockpit/public/hot
+# local scratch
+*.log
+.DS_Store

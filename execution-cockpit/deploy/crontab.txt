@@ -1,0 +1,11 @@
+# Execution Cockpit — scheduler cron.
+# Install with:  crontab -e   then paste the line below (edit the path).
+#
+# This ONE line drives everything defined in routes/console.php:
+#   - reminders:dispatch   (hourly, per-user local time)
+#   - cadence:generate     (daily 00:05)
+#   - cadence:mark-overdue (daily 00:15)
+#
+# Laravel's scheduler decides what actually runs each minute — you only need this line.
+
+* * * * * cd /var/www/execution-cockpit && php artisan schedule:run >> /dev/null 2>&1
