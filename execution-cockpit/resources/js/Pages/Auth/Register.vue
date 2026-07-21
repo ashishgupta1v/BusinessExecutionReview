@@ -20,7 +20,7 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Create Workspace — Execution Cockpit" />
+        <Head title="Create Workspace — Business Execution Toolkit" />
 
         <div class="auth-header">
             <h1 class="auth-title">Get Started Free</h1>

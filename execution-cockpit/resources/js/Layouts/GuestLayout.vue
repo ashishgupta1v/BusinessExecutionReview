@@ -11,9 +11,9 @@ import { Link } from '@inertiajs/vue3';
     <div class="guest-wrapper">
       <div class="brand-header">
         <Link href="/" class="brand-logo-link">
-          <div class="logo-box">EC</div>
+          <div class="logo-box">BET</div>
           <div class="brand-text">
-            <span class="title">Execution<b>Cockpit</b></span>
+            <span class="title">Business Execution<b>Toolkit</b></span>
             <span class="subtitle">Operating System for Founders</span>
           </div>
         </Link>

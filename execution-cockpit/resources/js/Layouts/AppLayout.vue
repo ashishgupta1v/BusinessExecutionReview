@@ -26,7 +26,7 @@ const logout = () => router.post(route('logout'))
 <template>
   <div class="shell">
     <aside class="sidebar">
-      <div class="brand"><div class="logo">EC</div><div><b>Execution</b><span>Cockpit</span></div></div>
+      <div class="brand"><div class="logo">BET</div><div><b>Business Execution</b><span>Toolkit</span></div></div>
       <div class="streakbox"><div class="lbl">Current streak</div><div class="num">{{ streak }} <small>days 🔥</small></div></div>
       <Link v-for="n in nav" :key="n.route" :href="route(n.route)" class="navbtn" :class="{ active: isActive(n) }">
         <span class="ic">{{ n.icon }}</span>

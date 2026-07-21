@@ -6,9 +6,9 @@
 
 self.addEventListener('push', (event) => {
   let payload = {};
-  try { payload = event.data ? event.data.json() : {}; } catch (e) { payload = { title: 'Execution Cockpit', body: event.data && event.data.text() }; }
+  try { payload = event.data ? event.data.json() : {}; } catch (e) { payload = { title: 'Business Execution Toolkit', body: event.data && event.data.text() }; }
 
-  const title = payload.title || 'Execution Cockpit';
+  const title = payload.title || 'Business Execution Toolkit';
   const options = {
     body:  payload.body || '',
     icon:  payload.icon || '/icons/icon-192.png',

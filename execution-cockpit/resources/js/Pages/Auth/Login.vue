@@ -29,11 +29,11 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Sign In — Execution Cockpit" />
+        <Head title="Sign In — Business Execution Toolkit" />
 
         <div class="auth-header">
             <h1 class="auth-title">Welcome back</h1>
-            <p class="auth-desc">Sign in to access your execution cockpit</p>
+            <p class="auth-desc">Sign in to access your business execution toolkit</p>
         </div>
 
         <div v-if="status" class="status-msg">
@@ -101,7 +101,7 @@ const submit = () => {
                 :class="{ 'opacity-50 cursor-not-allowed': form.processing }"
                 :disabled="form.processing"
             >
-                <span>Sign In to Cockpit</span>
+                <span>Sign In to Toolkit</span>
                 <span class="arr">→</span>
             </button>
         </form>

@@ -23,8 +23,8 @@ export default defineConfig({
             },
             includeAssets: ['favicon.ico', 'icons/icon-192.png', 'icons/icon-512.png'],
             manifest: {
-                name: 'Execution Cockpit',
-                short_name: 'Cockpit',
+                name: 'Business Execution Toolkit',
+                short_name: 'Toolkit',
                 description: 'Daily execution discipline — DCR, KPIs, reviews, streaks.',
                 theme_color: '#4f46e5',
                 background_color: '#0f172a',

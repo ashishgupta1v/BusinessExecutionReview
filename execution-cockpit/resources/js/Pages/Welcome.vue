@@ -10,8 +10,8 @@ defineProps({
 
 const faqs = ref([
     {
-        q: 'What is Execution Cockpit?',
-        a: 'Execution Cockpit is a multi-tenant business operating system designed for founders, agency owners, and high-performing teams to bridge the gap between high-level goals and daily execution.',
+        q: 'What is Business Execution Toolkit?',
+        a: 'Business Execution Toolkit is a multi-tenant business operating system designed for founders, agency owners, and high-performing teams to bridge the gap between high-level goals and daily execution.',
         open: true,
     },
     {
@@ -37,7 +37,7 @@ const toggleFaq = (index) => {
 </script>
 
 <template>
-    <Head title="Execution Cockpit — Turn Strategy Into Daily Execution" />
+    <Head title="Business Execution Toolkit — Turn Strategy Into Daily Execution" />
 
     <div class="landing-page">
         <!-- Ambient Glowing Background Spheres -->
@@ -49,9 +49,9 @@ const toggleFaq = (index) => {
         <header class="navbar">
             <div class="nav-container">
                 <Link href="/" class="nav-brand">
-                    <div class="logo-icon">EC</div>
+                    <div class="logo-icon">BET</div>
                     <div class="brand-info">
-                        <span class="brand-name">Execution<b>Cockpit</b></span>
+                        <span class="brand-name">Business<b>Execution Toolkit</b></span>
                         <span class="brand-sub">Operating System</span>
                     </div>
                 </Link>
@@ -197,7 +197,7 @@ const toggleFaq = (index) => {
             <div class="section-container max-w-3xl">
                 <div class="section-header">
                     <h2 class="section-title">Frequently Asked Questions</h2>
-                    <p class="section-sub">Everything you need to know about Execution Cockpit.</p>
+                    <p class="section-sub">Everything you need to know about Business Execution Toolkit.</p>
                 </div>
 
                 <div class="faq-accordion">
@@ -223,7 +223,7 @@ const toggleFaq = (index) => {
         <section class="cta-section">
             <div class="cta-container">
                 <h2 class="cta-title">Ready to Elevate Your Execution?</h2>
-                <p class="cta-sub">Join founders and operators using Execution Cockpit to build high-performing teams.</p>
+                <p class="cta-sub">Join founders and operators using Business Execution Toolkit to build high-performing teams.</p>
 
                 <div class="cta-action">
                     <a :href="route('google.redirect')" class="btn-primary-large">
@@ -237,8 +237,8 @@ const toggleFaq = (index) => {
         <footer class="footer">
             <div class="footer-container">
                 <div class="footer-left">
-                    <div class="logo-icon sm">EC</div>
-                    <span>© 2026 Execution Cockpit. All rights reserved.</span>
+                    <div class="logo-icon sm">BET</div>
+                    <span>© 2026 Business Execution Toolkit. All rights reserved.</span>
                 </div>
                 <div class="footer-right">
                     <Link :href="route('login')">Login</Link>
