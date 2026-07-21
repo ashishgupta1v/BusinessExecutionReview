@@ -4,7 +4,7 @@ defineOptions({ layout: AppLayout })
 import { ref, reactive, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 
-/** Feedback Log (Phase 1). Props from FeedbackController@index: items: [{id,date,type,body,action,assignee,status}] */
+/** Feedback Log — Antigravity Dark Glassmorphism UI. */
 const props = defineProps({ items: { type: Array, default: () => [] } })
 
 const filter = ref('All')
@@ -24,71 +24,317 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
 </script>
 
 <template>
-  <div class="fb">
-    <header class="head">
-      <div><h1>Feedback Log</h1><p class="sub">capture insight, assign an owner, close the loop</p><span class="cadence">Monthly cadence</span></div>
+  <div class="feedback-page">
+    <header class="feedback-header">
+      <div>
+        <div class="badge-tag">MONTHLY CADENCE</div>
+        <h1 class="page-title">Feedback Log</h1>
+        <p class="page-sub">capture insight, assign an owner, close the loop</p>
+      </div>
     </header>
 
-    <section class="card glance">
-      <div class="ring" :style="{ background: `conic-gradient(#059669 0 ${closedPct}%, #fef3c7 ${closedPct}% 100%)` }">
-        <div class="hole"><b>{{ closedPct }}%</b><span>closed</span></div>
-      </div>
-      <div class="leg">
-        <div><i style="background:#059669"></i> Done · {{ items.length - openCount }}</div>
-        <div><i style="background:#d97706"></i> Pending · {{ openCount }}</div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="addrow">
-        <select v-model="draft.type"><option>Positive</option><option>Negative</option><option>Suggestion</option></select>
-        <input v-model="draft.assignee" placeholder="Assign to" />
-      </div>
-      <input v-model="draft.body" placeholder="Feedback…" class="mt" />
-      <input v-model="draft.action" placeholder="Action taken…" class="mt" />
-      <button class="btn" @click="add">Log feedback</button>
-    </section>
-
-    <div class="chips">
-      <button v-for="c in ['All','Pending','Done','Positive','Negative','Suggestion']" :key="c"
-        class="chip" :class="{on:filter===c}" @click="filter=c">{{ c }}</button>
-    </div>
-
-    <section v-for="r in rows" :key="r.id" class="card fbrow">
-      <div class="top">
-        <div><span class="pill" :class="tone(r.type)">{{ r.type }}</span> <small>{{ r.date }}<template v-if="r.assignee"> · {{ r.assignee }}</template></small></div>
-        <div>
-          <button @click="toggle(r)"><span class="pill" :class="r.status==='Done'?'green':'amber'">{{ r.status }}</span></button>
-          <button class="x" @click="remove(r)">×</button>
+    <!-- Ring Stats Card -->
+    <section class="glass-card glance-card">
+      <div class="ring-container">
+        <div class="ring" :style="{ background: `conic-gradient(#10b981 0 ${closedPct}%, rgba(245, 158, 11, 0.3) ${closedPct}% 100%)` }">
+          <div class="ring-hole">
+            <b>{{ closedPct }}%</b>
+            <span>closed</span>
+          </div>
         </div>
       </div>
-      <div class="body">{{ r.body }}</div>
-      <div v-if="r.action" class="act">↳ {{ r.action }}</div>
+
+      <div class="ring-legend">
+        <div class="legend-item">
+          <span class="dot dot-green"></span>
+          <span>Done · <b>{{ items.length - openCount }}</b></span>
+        </div>
+        <div class="legend-item">
+          <span class="dot dot-amber"></span>
+          <span>Pending · <b>{{ openCount }}</b></span>
+        </div>
+      </div>
     </section>
+
+    <!-- Add Feedback Card -->
+    <section class="glass-card add-card">
+      <h3 class="card-subtitle">Log New Feedback</h3>
+      
+      <div class="form-row">
+        <select v-model="draft.type" class="glass-input select-type">
+          <option>Positive</option>
+          <option>Negative</option>
+          <option>Suggestion</option>
+        </select>
+        <input v-model="draft.assignee" placeholder="Assign to (e.g. Ashish)" class="glass-input flex-1" />
+      </div>
+
+      <input v-model="draft.body" placeholder="Feedback detail..." class="glass-input mt-3" />
+      <input v-model="draft.action" placeholder="Action taken or plan..." class="glass-input mt-3" />
+
+      <button class="btn-glow add-btn" @click="add">Log Feedback Item</button>
+    </section>
+
+    <!-- Filter Chips -->
+    <div class="chips-row">
+      <button 
+        v-for="c in ['All','Pending','Done','Positive','Negative','Suggestion']" 
+        :key="c"
+        class="chip-btn" 
+        :class="{ active: filter===c }" 
+        @click="filter=c"
+      >
+        {{ c }}
+      </button>
+    </div>
+
+    <!-- Feedback List Cards -->
+    <div class="feedback-list">
+      <section v-for="r in rows" :key="r.id" class="glass-card fb-row">
+        <div class="fb-top">
+          <div class="fb-meta">
+            <span class="type-pill" :class="'pill-' + tone(r.type)">{{ r.type }}</span>
+            <span class="date-text">{{ r.date }}<template v-if="r.assignee"> · {{ r.assignee }}</template></span>
+          </div>
+          
+          <div class="fb-actions">
+            <button @click="toggle(r)">
+              <span class="status-pill" :class="r.status==='Done' ? 'pill-done' : 'pill-pending'">
+                {{ r.status }}
+              </span>
+            </button>
+            <button class="remove-btn" @click="remove(r)">×</button>
+          </div>
+        </div>
+
+        <div class="fb-body">{{ r.body }}</div>
+        <div v-if="r.action" class="fb-action">↳ Action: {{ r.action }}</div>
+      </section>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.fb{max-width:760px;margin:0 auto;padding:20px}
-h1{font-size:23px;font-weight:800}.sub{color:#64748b;font-size:13px}
-.cadence{font-size:10px;font-weight:700;text-transform:uppercase;color:#4f46e5;background:#eef2ff;padding:3px 9px;border-radius:999px;display:inline-block;margin-top:6px}
-.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin-top:16px;box-shadow:0 1px 3px rgba(15,23,42,.08)}
-.glance{display:flex;align-items:center;gap:20px}
-.ring{width:118px;height:118px;border-radius:50%;display:grid;place-items:center}
-.hole{width:84px;height:84px;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center}
-.hole b{font-size:22px}.hole span{font-size:10px;color:#64748b}
-.leg div{display:flex;align-items:center;gap:7px;font-size:13px;margin-bottom:6px}
-.leg i{width:10px;height:10px;border-radius:3px}
-.addrow{display:flex;gap:7px}.addrow select{width:auto}.addrow input{flex:1}
-input,select{border:1px solid #e2e8f0;border-radius:10px;padding:9px 11px;width:100%;font:inherit}.mt{margin-top:7px}
-.btn{background:#4f46e5;color:#fff;border:none;border-radius:10px;padding:10px;font-weight:600;width:100%;margin-top:9px;cursor:pointer}
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
-.chip{font-size:12px;padding:5px 12px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;color:#64748b;cursor:pointer}
-.chip.on{background:#4f46e5;color:#fff;border-color:#4f46e5}
-.fbrow .top{display:flex;justify-content:space-between;align-items:center}
-.fbrow small{color:#94a3b8}.fbrow .body{margin-top:7px}.fbrow .act{color:#94a3b8;font-size:12px;margin-top:3px}
-.x{color:#cbd5e1;font-size:16px;background:none;border:none;cursor:pointer;margin-left:6px}
-.pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px}
-.pill.green{background:#d1fae5;color:#059669}.pill.amber{background:#fef3c7;color:#d97706}.pill.rose{background:#ffe4e6;color:#e11d48}.pill.indigo{background:#eef2ff;color:#4f46e5}
-button{background:none;border:none;cursor:pointer}
+.feedback-page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.feedback-header {
+  margin-bottom: 24px;
+}
+.badge-tag {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.page-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+.page-sub {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* Glance Ring */
+.glance-card {
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+.ring-container {
+  flex-shrink: 0;
+}
+.ring {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+.ring-hole {
+  width: 80px;
+  height: 80px;
+  background: #0b1020;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ring-hole b {
+  font-size: 22px;
+  color: #ffffff;
+  font-weight: 900;
+}
+.ring-hole span {
+  font-size: 10px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.ring-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #e2e8f0;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+.dot-green { background: #10b981; }
+.dot-amber { background: #f59e0b; }
+
+/* Add Card */
+.add-card {
+  padding: 22px;
+  margin-bottom: 24px;
+}
+.card-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+.select-type {
+  width: 140px;
+}
+.flex-1 { flex: 1; }
+.mt-3 { margin-top: 10px; }
+
+.add-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* Chips */
+.chips-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.chip-btn {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.chip-btn:hover {
+  color: #ffffff;
+  border-color: rgba(99, 102, 241, 0.4);
+}
+.chip-btn.active {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  border-color: #818cf8;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+/* List Items */
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.fb-row {
+  padding: 18px 20px;
+}
+.fb-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.fb-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.type-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.pill-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.pill-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.pill-indigo { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+
+.date-text {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.fb-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.status-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.pill-done { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+.pill-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.remove-btn:hover { color: #f43f5e; }
+
+.fb-body {
+  font-size: 15px;
+  color: #f8fafc;
+  line-height: 1.5;
+}
+.fb-action {
+  font-size: 13px;
+  color: #818cf8;
+  margin-top: 6px;
+}
 </style>
