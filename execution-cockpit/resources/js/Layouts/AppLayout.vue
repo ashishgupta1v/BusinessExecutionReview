@@ -4,14 +4,7 @@ import { Link, usePage, router } from '@inertiajs/vue3'
 
 /**
  * Shared app shell — sidebar (desktop) + bottom nav (mobile), mirroring the prototype.
- * Use as an Inertia persistent layout from each page:
- *
- *   <script setup>
- *   import AppLayout from '@/Layouts/AppLayout.vue'
- *   defineOptions({ layout: AppLayout })
- *   </script>
- *
- * Share `streak` and `auth.user` from HandleInertiaRequests::share() so the header can read them.
+ * Use as an Inertia persistent layout from each page.
  */
 const page = usePage()
 const user = computed(() => page.props.auth?.user ?? {})
