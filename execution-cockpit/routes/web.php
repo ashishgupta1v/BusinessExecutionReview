@@ -12,7 +12,15 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\PushSubscriptionController;
 use App\Http\Controllers\Auth\GoogleController;
 
-Route::get('/', fn () => redirect()->route('dcr.show'));
+Route::get('/', function () {
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        return redirect()->route('dcr.show');
+    }
+    return \Inertia\Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+});
 
 /*
  | Google OAuth (Socialite). Public — no auth required to start the flow.
