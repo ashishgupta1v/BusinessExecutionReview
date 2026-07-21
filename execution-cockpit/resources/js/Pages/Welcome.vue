@@ -106,9 +106,15 @@ const toggleFaq = (index) => {
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-container">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    <span>The Business Operating System for Founders & Teams</span>
+                <div class="hero-badges-wrapper">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        <span>The Business Operating System for Founders & Teams</span>
+                    </div>
+                    <a href="https://ashishgupta.dev/" target="_blank" rel="noopener noreferrer" class="creator-badge">
+                        <span class="creator-icon">⚡</span>
+                        <span>Crafted by <b>Ashish Gupta</b></span>
+                    </a>
                 </div>
 
                 <h1 class="hero-title">
@@ -354,9 +360,16 @@ const toggleFaq = (index) => {
             <div class="footer-container">
                 <div class="footer-left">
                     <img src="/images/logo.png" alt="Dhanda Diary Logo" class="logo-img sm" />
-                    <span>© 2026 Business Execution Toolkit. All rights reserved.</span>
+                    <div class="footer-copy-info">
+                        <span>© 2026 Business Execution Toolkit. All rights reserved.</span>
+                        <span class="author-attribution">
+                            Built by 
+                            <a href="https://ashishgupta.dev/" target="_blank" rel="noopener noreferrer" class="author-link">Ashish Gupta</a>
+                        </span>
+                    </div>
                 </div>
                 <div class="footer-right">
+                    <a href="https://ashishgupta.dev/" target="_blank" rel="noopener noreferrer" class="author-pill">ashishgupta.dev ↗</a>
                     <Link :href="route('login')">Login</Link>
                     <Link :href="route('register')">Register</Link>
                 </div>
@@ -594,6 +607,15 @@ const toggleFaq = (index) => {
   margin: 0 auto;
 }
 
+.hero-badges-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -605,7 +627,33 @@ const toggleFaq = (index) => {
   color: #c7d2fe;
   font-size: 13px;
   font-weight: 600;
-  margin-bottom: 24px;
+}
+
+.creator-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: #a5f3fc;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.creator-badge:hover {
+  background: rgba(6, 182, 212, 0.22);
+  border-color: rgba(6, 182, 212, 0.5);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.creator-badge b {
+  font-weight: 800;
+  color: #38bdf8;
 }
 
 .badge-dot {
@@ -1148,16 +1196,62 @@ const toggleFaq = (index) => {
 
 .footer-right {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 
 .footer-right a {
   color: #94a3b8;
   text-decoration: none;
+  font-size: 13px;
+  transition: color 0.15s ease;
 }
 
 .footer-right a:hover {
   color: #ffffff;
+}
+
+.footer-copy-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author-attribution {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.author-link {
+  color: #38bdf8;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(56, 189, 248, 0.5);
+  transition: all 0.2s ease;
+}
+
+.author-link:hover {
+  color: #a5f3fc;
+  border-bottom-style: solid;
+  border-color: #a5f3fc;
+}
+
+.author-pill {
+  font-size: 12px !important;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8 !important;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.author-pill:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #ffffff !important;
 }
 
 @media (max-width: 990px) {
