@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import GoogleLoginButton from '@/Components/GoogleLoginButton.vue';
 
@@ -8,28 +8,7 @@ defineProps({
     canRegister: Boolean,
 });
 
-// Interactive 3D mouse parallax tracking
-const mouseX = ref(0);
-const mouseY = ref(0);
-const tiltX = ref(0);
-const tiltY = ref(0);
 const mobileNavOpen = ref(false);
-
-const handleMouseMove = (e) => {
-    if (window.innerWidth < 768) return; // Disable heavy 3D mouse tracking on mobile
-    const { innerWidth, innerHeight } = window;
-    mouseX.value = (e.clientX - innerWidth / 2) / (innerWidth / 2);
-    mouseY.value = (e.clientY - innerHeight / 2) / (innerHeight / 2);
-    tiltX.value = mouseY.value * -10; // Max 10 deg tilt
-    tiltY.value = mouseX.value * 10;
-};
-
-onMounted(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-});
-onUnmounted(() => {
-    window.removeEventListener('mousemove', handleMouseMove);
-});
 
 const faqs = ref([
     {
@@ -49,7 +28,7 @@ const faqs = ref([
     },
     {
         q: 'How do automated streaks and WebPush notifications work?',
-        a: 'Filing your DCR every day builds your active streak. WebPush notifications nudge you at your chosen time directly in your browser so you never break the streak.',
+        a: 'Filing your DCR every day builds your active streak. WebPush notifications nudge you at your chosen time directly in your browser so you never break momentum.',
         open: false,
     },
 ]);
@@ -60,10 +39,10 @@ const toggleFaq = (index) => {
 </script>
 
 <template>
-    <Head title="Business Execution Toolkit — 3D Execution Operating System" />
+    <Head title="Business Execution Toolkit — The Operating System for Founders" />
 
     <div class="landing-page">
-        <!-- Ambient Glowing 3D Background Orbs -->
+        <!-- Ambient Glowing Background Spheres -->
         <div class="glow-orb orb-top-left"></div>
         <div class="glow-orb orb-top-right"></div>
         <div class="glow-orb orb-mid-left"></div>
@@ -84,7 +63,7 @@ const toggleFaq = (index) => {
                 <nav class="nav-links">
                     <a href="#purpose">Purpose</a>
                     <a href="#cadence">Cadence Engine</a>
-                    <a href="#preview">3D Cockpit</a>
+                    <a href="#preview">Cockpit Preview</a>
                     <a href="#features">Features</a>
                     <a href="#faq">FAQ</a>
                 </nav>
@@ -110,7 +89,7 @@ const toggleFaq = (index) => {
                 <div class="drawer-content" @click.stop>
                     <a href="#purpose" @click="mobileNavOpen = false">Purpose & Solution</a>
                     <a href="#cadence" @click="mobileNavOpen = false">Cadence Engine</a>
-                    <a href="#preview" @click="mobileNavOpen = false">3D Cockpit</a>
+                    <a href="#preview" @click="mobileNavOpen = false">Cockpit Preview</a>
                     <a href="#features" @click="mobileNavOpen = false">Features</a>
                     <a href="#faq" @click="mobileNavOpen = false">FAQ</a>
                     <div class="drawer-divider"></div>
@@ -129,17 +108,17 @@ const toggleFaq = (index) => {
             <div class="hero-container">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    <span>The 3D Execution Operating System for Founders</span>
+                    <span>The Business Operating System for Founders & Teams</span>
                 </div>
 
                 <h1 class="hero-title">
                     Bridge Strategy & Daily Action.<br />
-                    <span class="gradient-text">Flawless 3D Execution.</span>
+                    <span class="gradient-text">Flawless Daily Execution.</span>
                 </h1>
 
                 <p class="hero-sub">
                     Eliminate goal drift between quarterly targets. Track Daily Close Reports, 
-                    Weekly KPIs, Monthly Partner Feedback, and Automated Streaks in one real-time 3D spatial cockpit.
+                    Weekly KPIs, Monthly Partner Feedback, and Automated Streaks in one real-time cockpit.
                 </p>
 
                 <div class="hero-actions">
@@ -161,13 +140,10 @@ const toggleFaq = (index) => {
             </div>
         </section>
 
-        <!-- 3D Spatial Interactive Cockpit Preview Canvas -->
+        <!-- Interactive Cockpit Preview Canvas -->
         <section id="preview" class="preview-section">
             <div class="preview-container">
-                <div 
-                    class="preview-card-3d" 
-                    :style="{ transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg)` }"
-                >
+                <div class="preview-cockpit-card">
                     <div class="card-topbar">
                         <div class="mac-dots">
                             <span class="dot-red"></span>
@@ -179,28 +155,28 @@ const toggleFaq = (index) => {
                     </div>
 
                     <div class="cockpit-grid">
-                        <div class="stat-card spatial-pop-1">
+                        <div class="stat-card">
                             <div class="stat-label">Daily Close Report (DCR)</div>
                             <div class="stat-value text-emerald">94% Done</div>
                             <div class="stat-sub">5 of 6 discipline checklist items completed</div>
                             <div class="mini-progress-bar"><div class="bar-fill bg-emerald" style="width: 94%"></div></div>
                         </div>
 
-                        <div class="stat-card spatial-pop-2">
+                        <div class="stat-card">
                             <div class="stat-label">Weekly KPI Scorecard</div>
                             <div class="stat-value text-indigo">Sales Calls: 24/20</div>
                             <div class="stat-sub">+20% over target default</div>
                             <div class="mini-progress-bar"><div class="bar-fill bg-indigo" style="width: 100%"></div></div>
                         </div>
 
-                        <div class="stat-card spatial-pop-3">
+                        <div class="stat-card">
                             <div class="stat-label">Monthly Review</div>
                             <div class="stat-value text-purple">4.8 / 5.0 Rating</div>
                             <div class="stat-sub">3 Partner accountability feedbacks</div>
                             <div class="mini-progress-bar"><div class="bar-fill bg-purple" style="width: 96%"></div></div>
                         </div>
 
-                        <div class="stat-card spatial-pop-4">
+                        <div class="stat-card">
                             <div class="stat-label">Kanban Board Status</div>
                             <div class="stat-value text-amber">12 Tasks Completed</div>
                             <div class="stat-sub">3 in progress, 0 overdue</div>
@@ -211,7 +187,7 @@ const toggleFaq = (index) => {
             </div>
         </section>
 
-        <!-- What Purpose Does BET Solve? 3D Interactive Comparison Section -->
+        <!-- What Purpose Does BET Solve? Comparison Section -->
         <section id="purpose" class="purpose-section">
             <div class="section-container">
                 <div class="section-header">
@@ -239,7 +215,7 @@ const toggleFaq = (index) => {
                     <div class="glass-card comp-card comp-after">
                         <div class="comp-header">
                             <span class="comp-badge badge-emerald">WITH BET OPERATING SYSTEM</span>
-                            <h3>Disciplined 3D Execution</h3>
+                            <h3>Disciplined Daily Execution</h3>
                         </div>
                         <ul class="comp-list">
                             <li><span class="check-icon">✓</span> <b>90-Sec DCR Shutdown:</b> Clear daily wins, pending tasks & needle mover tracking.</li>
@@ -262,28 +238,28 @@ const toggleFaq = (index) => {
                 </div>
 
                 <div class="cadence-grid">
-                    <div class="cadence-card spatial-card">
+                    <div class="cadence-card">
                         <div class="card-icon text-indigo">01</div>
                         <h3>Daily Close Report</h3>
                         <p>Lock in daily discipline, check off habits, track revenue metrics, and log daily wins before shutdown.</p>
                         <span class="cadence-badge">Daily Cadence</span>
                     </div>
 
-                    <div class="cadence-card spatial-card">
+                    <div class="cadence-card">
                         <div class="card-icon text-emerald">02</div>
                         <h3>Weekly KPI Scorecard</h3>
                         <p>Track core leading indicators, measure weekly velocity, and run async review retrospectives.</p>
                         <span class="cadence-badge">Weekly Cadence</span>
                     </div>
 
-                    <div class="cadence-card spatial-card">
+                    <div class="cadence-card">
                         <div class="card-icon text-purple">03</div>
                         <h3>Monthly 360° Feedback</h3>
                         <p>Gather structured feedback from accountability partners and evaluate long-term strategic alignment.</p>
                         <span class="cadence-badge">Monthly Cadence</span>
                     </div>
 
-                    <div class="cadence-card spatial-card">
+                    <div class="cadence-card">
                         <div class="card-icon text-amber">04</div>
                         <h3>Ongoing Kanban Board</h3>
                         <p>Manage high-impact execution tasks with drag-and-drop boards, automated stale detection, and priorities.</p>
@@ -303,25 +279,25 @@ const toggleFaq = (index) => {
                 </div>
 
                 <div class="features-grid">
-                    <div class="feature-card spatial-card">
+                    <div class="feature-card">
                         <div class="feature-icon">🔥</div>
                         <h4>Automated Streak Engine</h4>
                         <p>Habit tracking that calculates current and longest streaks to build psychological momentum.</p>
                     </div>
 
-                    <div class="feature-card spatial-card">
+                    <div class="feature-card">
                         <div class="feature-icon">⚡</div>
                         <h4>Instant WebPush Reminders</h4>
                         <p>Receive scheduled nudges directly in your browser so daily close reports are never forgotten.</p>
                     </div>
 
-                    <div class="feature-card spatial-card">
+                    <div class="feature-card">
                         <div class="feature-icon">🛡️</div>
                         <h4>Google OAuth & Workspace Isolation</h4>
                         <p>Enterprise multi-tenant architecture with auto-provisioned agency KPIs and roles.</p>
                     </div>
 
-                    <div class="feature-card spatial-card">
+                    <div class="feature-card">
                         <div class="feature-icon">📊</div>
                         <h4>Visual Trend ApexCharts</h4>
                         <p>Interactive smooth area charts comparing weekly performance actuals against targets.</p>
@@ -722,10 +698,9 @@ const toggleFaq = (index) => {
   color: #334155;
 }
 
-/* 3D Spatial Interactive Stage */
+/* Cockpit Preview Section */
 .preview-section {
   padding: 40px 24px 80px;
-  perspective: 1200px;
 }
 
 .preview-container {
@@ -733,7 +708,7 @@ const toggleFaq = (index) => {
   margin: 0 auto;
 }
 
-.preview-card-3d {
+.preview-cockpit-card {
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -742,8 +717,14 @@ const toggleFaq = (index) => {
   box-shadow: 
     0 30px 60px -12px rgba(0, 0, 0, 0.7),
     0 0 35px rgba(99, 102, 241, 0.25);
-  transform-style: preserve-3d;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preview-cockpit-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 
+    0 35px 70px -12px rgba(0, 0, 0, 0.8),
+    0 0 45px rgba(99, 102, 241, 0.35);
 }
 
 .card-topbar {
@@ -790,7 +771,6 @@ const toggleFaq = (index) => {
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   padding: 24px;
-  transform-style: preserve-3d;
 }
 
 .stat-card {
@@ -799,19 +779,13 @@ const toggleFaq = (index) => {
   border-radius: 14px;
   padding: 20px;
   text-align: left;
-  transition: all 0.3s ease;
-}
-
-@media (min-width: 768px) {
-  .spatial-pop-1 { transform: translateZ(30px); }
-  .spatial-pop-2 { transform: translateZ(40px); }
-  .spatial-pop-3 { transform: translateZ(35px); }
-  .spatial-pop-4 { transform: translateZ(25px); }
+  transition: all 0.25s ease;
 }
 
 .stat-card:hover {
   background: rgba(30, 41, 59, 0.85);
   border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
@@ -980,7 +954,7 @@ const toggleFaq = (index) => {
 }
 
 .cadence-card:hover {
-  transform: translateY(-6px) translateZ(10px);
+  transform: translateY(-4px);
   border-color: rgba(99, 102, 241, 0.4);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
 }
@@ -1216,9 +1190,8 @@ const toggleFaq = (index) => {
   .trust-bar .dot { display: none; }
   
   .preview-section, .purpose-section { padding: 20px 12px 40px; }
-  .preview-card-3d { transform: none !important; }
   .cockpit-grid { grid-template-columns: 1fr; padding: 14px; gap: 10px; }
-  .stat-card { padding: 14px; transform: none !important; }
+  .stat-card { padding: 14px; }
 
   .comparison-grid { grid-template-columns: 1fr; }
   .comp-card { padding: 18px 16px; }
