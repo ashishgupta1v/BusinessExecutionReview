@@ -34,7 +34,7 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
     <!-- Desktop Sidebar -->
     <aside class="sidebar">
       <Link href="/" class="brand">
-        <div class="logo">BET</div>
+        <img src="/images/logo.png" alt="Dhanda Diary Logo" class="brand-logo-img" />
         <div class="brand-text">
           <b>Business Execution</b>
           <span>Toolkit</span>
@@ -88,7 +88,7 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
       <!-- Mobile Top Bar -->
       <header class="topbar">
         <div class="tb-left">
-          <div class="logo-sm">BET</div>
+          <img src="/images/logo.png" alt="Dhanda Diary Logo" class="logo-sm-img" />
           <span class="tb-title">Business Execution Toolkit</span>
         </div>
         <div class="tb-right">
@@ -206,17 +206,15 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
   padding: 0 4px;
   text-decoration: none;
 }
-.brand .logo {
+.brand-logo-img {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
-  display: grid;
-  place-items: center;
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 15px;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.45));
+  transition: transform 0.2s ease;
+}
+.brand:hover .brand-logo-img {
+  transform: scale(1.06);
 }
 .brand-text b {
   color: #ffffff;
@@ -461,15 +459,11 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
     min-width: 0;
     flex: 1;
   }
-  .logo-sm {
+  .logo-sm-img {
     width: 30px;
     height: 30px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #6366f1, #4338ca);
-    display: grid;
-    place-items: center;
-    font-weight: 800;
-    font-size: 11px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(99, 102, 241, 0.4));
     flex-shrink: 0;
   }
   .tb-title {

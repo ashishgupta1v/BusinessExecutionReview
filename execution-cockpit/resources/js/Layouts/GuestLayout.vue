@@ -11,9 +11,9 @@ import { Link } from '@inertiajs/vue3';
     <div class="guest-wrapper">
       <div class="brand-header">
         <Link href="/" class="brand-logo-link">
-          <div class="logo-box">BET</div>
+          <img src="/images/logo.png" alt="Dhanda Diary Logo" class="guest-logo-img" />
           <div class="brand-text">
-            <span class="title">Business Execution<b>Toolkit</b></span>
+            <span class="title">Business Execution <b>Toolkit</b></span>
             <span class="subtitle">Operating System for Founders</span>
           </div>
         </Link>
@@ -100,18 +100,11 @@ import { Link } from '@inertiajs/vue3';
   transform: translateY(-2px);
 }
 
-.logo-box {
+.guest-logo-img {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #6366f1, #4338ca);
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-  display: grid;
-  place-items: center;
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.5px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 14px rgba(99, 102, 241, 0.45));
 }
 
 .brand-text {

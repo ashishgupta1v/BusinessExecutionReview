@@ -52,7 +52,7 @@ const toggleFaq = (index) => {
         <header class="navbar">
             <div class="nav-container">
                 <Link href="/" class="nav-brand">
-                    <div class="logo-icon">BET</div>
+                    <img src="/images/logo.png" alt="Dhanda Diary Logo" class="logo-img" />
                     <div class="brand-info">
                         <span class="brand-name"><b>Business Execution Toolkit</b></span>
                         <span class="brand-sub">Operating System</span>
@@ -353,7 +353,7 @@ const toggleFaq = (index) => {
         <footer class="footer">
             <div class="footer-container">
                 <div class="footer-left">
-                    <div class="logo-icon sm">BET</div>
+                    <img src="/images/logo.png" alt="Dhanda Diary Logo" class="logo-img sm" />
                     <span>© 2026 Business Execution Toolkit. All rights reserved.</span>
                 </div>
                 <div class="footer-right">
@@ -442,24 +442,17 @@ const toggleFaq = (index) => {
   text-decoration: none;
 }
 
-.logo-icon {
+.logo-img {
   width: 38px;
   height: 38px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #4338ca);
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-weight: 800;
-  font-size: 15px;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.45));
 }
 
-.logo-icon.sm {
+.logo-img.sm {
   width: 28px;
   height: 28px;
-  font-size: 12px;
-  border-radius: 8px;
+  filter: drop-shadow(0 2px 6px rgba(99, 102, 241, 0.4));
 }
 
 .brand-name {
