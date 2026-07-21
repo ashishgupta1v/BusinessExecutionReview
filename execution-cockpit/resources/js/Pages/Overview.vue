@@ -94,7 +94,7 @@ const barPct = k => k.target ? Math.min(100, Math.round(k.actual / k.target * 10
     <!-- KPI Status Progress Horizontal Bars -->
     <section class="glass-card section-card">
       <div class="card-header-row">
-        <h3 class="card-subtitle">KPI Status — Latest vs Target</h3>
+        <h3 class="card-subtitle mb-0">KPI Status — Latest vs Target</h3>
         <span class="status-pill" :class="kpiOnTarget >= kpiStatus.length - 1 ? 'pill-good' : 'pill-amber'">
           {{ kpiOnTarget }}/{{ kpiStatus.length }} on target
         </span>
@@ -230,7 +230,10 @@ const barPct = k => k.target ? Math.min(100, Math.round(k.actual / k.target * 10
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
 }
+.card-subtitle.mb-0 { margin-bottom: 0; }
 .card-subtitle small {
   color: #64748b;
   font-size: 12px;
@@ -298,6 +301,8 @@ const barPct = k => k.target ? Math.min(100, Math.round(k.actual / k.target * 10
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .status-pill {
   font-size: 12px;
@@ -364,5 +369,28 @@ const barPct = k => k.target ? Math.min(100, Math.round(k.actual / k.target * 10
   color: #64748b;
   font-size: 12px;
   margin-top: 10px;
+}
+
+@media (max-width: 640px) {
+  .overview-page {
+    padding: 16px 12px;
+  }
+  .page-title {
+    font-size: 22px;
+  }
+  .hero-stat-card {
+    padding: 14px;
+  }
+  .stat-value {
+    font-size: 24px;
+  }
+  .section-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+  .donut-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 </style>

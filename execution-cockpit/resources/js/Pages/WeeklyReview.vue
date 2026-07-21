@@ -201,7 +201,7 @@ const fields = [
 .review-textarea {
   width: 100%;
   padding: 14px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -212,15 +212,35 @@ const fields = [
 .big-submit-btn {
   width: 100%;
   padding: 16px;
-  font-size: 17px;
+  font-size: 16px;
   letter-spacing: 0.02em;
   border: none;
   cursor: pointer;
+  min-height: 52px;
 }
 
 @media (max-width: 640px) {
+  .weekly-page {
+    padding: 16px 12px;
+  }
+  .weekly-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .status-badge {
+    align-self: flex-start;
+  }
+  .page-title {
+    font-size: 22px;
+  }
   .glance-banner {
     grid-template-columns: repeat(2, 1fr);
+    padding: 14px;
+    gap: 12px;
+  }
+  .review-card {
+    padding: 16px 14px;
+    border-radius: 16px;
   }
 }
 </style>

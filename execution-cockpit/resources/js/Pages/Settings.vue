@@ -162,6 +162,8 @@ function save() {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 .helper-text {
   font-size: 12px;
@@ -176,15 +178,17 @@ function save() {
   margin-bottom: 12px;
   font-size: 14px;
   color: #e2e8f0;
+  gap: 8px;
 }
 .time-input, .select-input, .num-input {
   padding: 8px 12px !important;
-  font-size: 13px;
+  font-size: 14px;
 }
 .num-input { width: 80px; }
 .full-select {
   width: 100%;
   padding: 10px 14px !important;
+  font-size: 14px;
 }
 
 .chk-list {
@@ -199,10 +203,11 @@ function save() {
   font-size: 14px;
   color: #e2e8f0;
   cursor: pointer;
+  touch-action: manipulation;
 }
 .chk-item input {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   accent-color: #6366f1;
 }
 
@@ -215,5 +220,26 @@ function save() {
   font-size: 16px;
   border: none;
   cursor: pointer;
+  min-height: 52px;
+}
+
+@media (max-width: 600px) {
+  .settings-page {
+    padding: 16px 12px;
+  }
+  .page-title {
+    font-size: 22px;
+  }
+  .section-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+  .field-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .num-input, .time-input, .select-input {
+    width: 100%;
+  }
 }
 </style>

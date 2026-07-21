@@ -1,14 +1,15 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
 
 /**
  * Antigravity Dark Glassmorphic App Shell.
- * Provides a unified spatial background, glass sidebar, and glowing navigation.
+ * Provides a unified spatial background, glass sidebar, mobile profile drawer, and glowing navigation.
  */
 const page = usePage()
 const user = computed(() => page.props.auth?.user ?? {})
 const streak = computed(() => page.props.streak?.current ?? 0)
+const mobileMenuOpen = ref(false)
 
 const nav = [
   { name: 'Day Close Report', route: 'dcr.show',       match: 'dcr',      icon: '◉', cadence: 'Daily',   short: 'DCR' },
@@ -21,6 +22,7 @@ const nav = [
 const current = computed(() => nav.find(n => route().current(n.route)) ?? nav[0])
 const isActive = n => route().current(n.route)
 const logout = () => router.post(route('logout'))
+const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
 </script>
 
 <template>
@@ -29,6 +31,7 @@ const logout = () => router.post(route('logout'))
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
+    <!-- Desktop Sidebar -->
     <aside class="sidebar">
       <Link href="/" class="brand">
         <div class="logo">BET</div>
@@ -80,22 +83,52 @@ const logout = () => router.post(route('logout'))
       </div>
     </aside>
 
+    <!-- Main Content Area -->
     <main class="main">
+      <!-- Mobile Top Bar -->
       <header class="topbar">
         <div class="tb-left">
           <div class="logo-sm">BET</div>
           <span class="tb-title">{{ current.name }}</span>
         </div>
-        <div class="tb-streak">
-          <span>{{ streak }}</span> <span class="flame-anim">🔥</span>
+        <div class="tb-right">
+          <div class="tb-streak">
+            <span>{{ streak }}</span> <span class="flame-anim">🔥</span>
+          </div>
+          <button class="avatar-btn" @click="toggleMobileMenu" aria-label="Open profile menu">
+            {{ user.name ? user.name.charAt(0).toUpperCase() : 'U' }}
+          </button>
         </div>
       </header>
+
+      <!-- Mobile Profile Popover Modal -->
+      <div v-if="mobileMenuOpen" class="mobile-menu-backdrop" @click="mobileMenuOpen = false">
+        <div class="mobile-menu-card" @click.stop>
+          <div class="mm-header">
+            <div class="avatar-lg">{{ user.name ? user.name.charAt(0).toUpperCase() : 'U' }}</div>
+            <div class="mm-user">
+              <b>{{ user.name || 'User' }}</b>
+              <span>{{ user.email || '' }}</span>
+            </div>
+            <button class="mm-close" @click="mobileMenuOpen = false">&times;</button>
+          </div>
+          <div class="mm-links">
+            <Link :href="route('settings.edit')" class="mm-item" @click="mobileMenuOpen = false">
+              <span>⚙</span> Account & Reminders
+            </Link>
+            <button class="mm-item mm-logout" @click="logout">
+              <span>↳</span> Sign out
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div class="content">
         <slot />
       </div>
     </main>
 
+    <!-- Mobile Bottom Navigation Bar -->
     <nav class="bnav">
       <Link 
         v-for="n in nav" 
@@ -404,49 +437,158 @@ const logout = () => router.post(route('logout'))
   .sidebar {
     display: none;
   }
+  .main {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
   .topbar {
     display: flex;
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(11, 16, 32, 0.9);
-    backdrop-filter: blur(16px);
+    background: rgba(11, 16, 32, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     color: #fff;
-    padding: 12px 18px;
+    padding: 10px 14px;
     justify-content: space-between;
     align-items: center;
   }
   .tb-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
   .logo-sm {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 8px;
     background: linear-gradient(135deg, #6366f1, #4338ca);
     display: grid;
     place-items: center;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 11px;
   }
   .tb-title {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
+  }
+  .tb-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   .tb-streak {
     font-weight: 800;
-    font-size: 16px;
+    font-size: 13px;
     color: #f59e0b;
     display: flex;
     align-items: center;
     gap: 4px;
     background: rgba(245, 158, 11, 0.1);
-    padding: 4px 10px;
+    padding: 4px 8px;
     border-radius: 999px;
     border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+  .avatar-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Mobile Profile Popover Modal */
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  .mobile-menu-card {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+  }
+  .mm-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .avatar-lg {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 18px;
+    display: grid;
+    place-items: center;
+  }
+  .mm-user {
+    display: flex;
+    flex-direction: column;
+  }
+  .mm-user b {
+    color: #ffffff;
+    font-size: 15px;
+  }
+  .mm-user span {
+    color: #94a3b8;
+    font-size: 12px;
+  }
+  .mm-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .mm-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mm-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .mm-logout {
+    color: #f43f5e;
+    background: rgba(244, 63, 94, 0.1);
+    border-color: rgba(244, 63, 94, 0.2);
+    cursor: pointer;
+    width: 100%;
   }
 
   .bnav {
@@ -458,21 +600,27 @@ const logout = () => router.post(route('logout'))
     right: 0;
     background: rgba(11, 16, 32, 0.95);
     backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     z-index: 50;
   }
   .bbtn {
-    padding: 10px 0;
+    padding: 8px 2px;
+    min-height: 52px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    font-size: 10px;
+    justify-content: center;
+    gap: 2px;
+    font-size: 9px;
     color: #64748b;
     text-decoration: none;
+    touch-action: manipulation;
   }
   .bbtn .ic {
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 1;
   }
   .bbtn.active {
     color: #818cf8;

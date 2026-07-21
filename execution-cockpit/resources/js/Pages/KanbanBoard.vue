@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '../Layouts/AppLayout.vue'
 defineOptions({ layout: AppLayout })
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 import draggable from 'vuedraggable'
 
@@ -19,7 +19,13 @@ const cols = reactive({
   done: [...props.columns.done],
 })
 const newCard = reactive({ todo: '', doing: '', done: '' })
+const activeTab = ref('all') // 'all' | 'todo' | 'doing' | 'done'
 const meta = [['todo', 'To Do', 'indigo'], ['doing', 'In Progress', 'amber'], ['done', 'Done', 'emerald']]
+
+const visibleMeta = computed(() => {
+  if (activeTab.value === 'all') return meta
+  return meta.filter(m => m[0] === activeTab.value)
+})
 
 function isStale(card) {
   if (!card.entered_column_at) return false
@@ -51,10 +57,28 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
         <h1 class="page-title">Kanban Board</h1>
         <p class="page-sub">drag cards between columns · stuck &gt; {{ staleDays }} days gets flagged</p>
       </div>
+
+      <!-- Mobile Column Switcher -->
+      <div class="mobile-tab-bar">
+        <button 
+          class="tab-btn" 
+          :class="{ active: activeTab === 'all' }" 
+          @click="activeTab = 'all'"
+        >All</button>
+        <button 
+          v-for="m in meta" 
+          :key="m[0]" 
+          class="tab-btn" 
+          :class="{ active: activeTab === m[0] }" 
+          @click="activeTab = m[0]"
+        >
+          {{ m[1] }} ({{ cols[m[0]].length }})
+        </button>
+      </div>
     </header>
 
     <div class="board-grid">
-      <div v-for="m in meta" :key="m[0]" class="glass-card column-card" :class="'col-' + m[2]">
+      <div v-for="m in visibleMeta" :key="m[0]" class="glass-card column-card" :class="'col-' + m[2]">
         <div class="column-header">
           <span class="column-title">{{ m[1] }}</span>
           <span class="column-count">{{ cols[m[0]].length }}</span>
@@ -135,6 +159,31 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
   margin-top: 2px;
 }
 
+/* Mobile Tab Switcher */
+.mobile-tab-bar {
+  display: none;
+  gap: 6px;
+  margin-top: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.tab-btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: #6366f1;
+  color: #ffffff;
+  border-color: #818cf8;
+}
+
 .board-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -150,7 +199,7 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
   padding: 16px;
   display: flex;
   flex-direction: column;
-  min-height: 480px;
+  min-height: 440px;
 }
 .col-indigo { border-top: 3px solid #6366f1; }
 .col-amber { border-top: 3px solid #f59e0b; }
@@ -182,7 +231,7 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 200px;
+  min-height: 160px;
 }
 
 .task-card {
@@ -192,6 +241,7 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
   border-radius: 14px;
   cursor: grab;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
 }
 .task-card:hover {
   transform: translateY(-2px);
@@ -234,8 +284,9 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
   background: none;
   border: none;
   color: #64748b;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
+  padding: 0 4px;
 }
 .remove-btn:hover { color: #f43f5e; }
 
@@ -245,11 +296,23 @@ const remove = id => router.delete(route('kanban.cards.destroy', id), { preserve
 .add-card-input {
   width: 100%;
   padding: 10px 12px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .drag-ghost {
   opacity: 0.4;
   border: 2px dashed #818cf8;
+}
+
+@media (max-width: 767px) {
+  .kanban-page {
+    padding: 16px 12px;
+  }
+  .mobile-tab-bar {
+    display: flex;
+  }
+  .page-title {
+    font-size: 22px;
+  }
 }
 </style>

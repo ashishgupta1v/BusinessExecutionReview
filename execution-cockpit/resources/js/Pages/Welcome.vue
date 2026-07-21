@@ -51,7 +51,7 @@ const toggleFaq = (index) => {
                 <Link href="/" class="nav-brand">
                     <div class="logo-icon">BET</div>
                     <div class="brand-info">
-                        <span class="brand-name"><b> Business Execution Toolkit</b></span>
+                        <span class="brand-name"><b>Business Execution Toolkit</b></span>
                         <span class="brand-sub">Operating System</span>
                     </div>
                 </Link>
@@ -832,12 +832,32 @@ const toggleFaq = (index) => {
   .cadence-grid { grid-template-columns: repeat(2, 1fr); }
   .cockpit-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
-  .hero-title { font-size: 38px; }
+  .hero-title { font-size: 42px; }
 }
 
-@media (max-width: 600px) {
-  .cadence-grid { grid-template-columns: 1fr; }
-  .hero-actions { flex-direction: column; }
+@media (max-width: 640px) {
+  .nav-container { padding: 12px 16px; }
+  .brand-name { font-size: 14px; }
+  .brand-sub { display: none; }
+  .hero-section { padding: 48px 16px 40px; }
+  .hero-title { font-size: 30px; }
+  .hero-sub { font-size: 15px; margin-bottom: 24px; }
+  .hero-actions { flex-direction: column; width: 100%; }
   .google-wrapper { max-width: 100%; width: 100%; }
+  .btn-secondary { width: 100%; text-align: center; min-height: 48px; display: grid; place-items: center; }
+  .trust-bar { flex-direction: column; gap: 6px; }
+  .trust-bar .dot { display: none; }
+  
+  .preview-section { padding: 20px 12px 40px; }
+  .preview-card-3d { transform: none !important; }
+  .cockpit-grid { grid-template-columns: 1fr; padding: 14px; gap: 10px; }
+  .stat-card { padding: 14px; }
+
+  .cadence-section, .faq-section, .cta-section { padding: 48px 16px; }
+  .cadence-grid { grid-template-columns: 1fr; }
+  .section-title, .cta-title { font-size: 26px; }
+
+  .footer-container { flex-direction: column; gap: 14px; text-align: center; }
+  .footer-left { flex-direction: column; }
 }
 </style>

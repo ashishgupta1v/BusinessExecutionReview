@@ -232,11 +232,12 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
 
 .add-btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 14px;
   border: none;
   cursor: pointer;
   font-size: 15px;
+  min-height: 48px;
 }
 
 /* Chips */
@@ -256,6 +257,7 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
   color: #94a3b8;
   cursor: pointer;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 .chip-btn:hover {
   color: #ffffff;
@@ -282,6 +284,8 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .fb-meta {
   display: flex;
@@ -313,6 +317,7 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 999px;
+  cursor: pointer;
 }
 .pill-done { background: rgba(16, 185, 129, 0.2); color: #34d399; }
 .pill-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
@@ -323,7 +328,7 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
   color: #64748b;
   font-size: 18px;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 4px;
 }
 .remove-btn:hover { color: #f43f5e; }
 
@@ -336,5 +341,33 @@ const tone = t => t === 'Positive' ? 'green' : t === 'Negative' ? 'rose' : 'indi
   font-size: 13px;
   color: #818cf8;
   margin-top: 6px;
+}
+
+@media (max-width: 640px) {
+  .feedback-page {
+    padding: 16px 12px;
+  }
+  .page-title {
+    font-size: 22px;
+  }
+  .glance-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px 14px;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+  .select-type {
+    width: 100%;
+  }
+  .add-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+  .fb-row {
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
 }
 </style>

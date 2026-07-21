@@ -2,7 +2,7 @@
 import AppLayout from '../Layouts/AppLayout.vue'
 defineOptions({ layout: AppLayout })
 import { reactive, computed } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 
 /**
  * Day Close Report — Antigravity Dark Glassmorphism UI.
@@ -301,6 +301,7 @@ function fileDcr() {
   align-items: center;
   gap: 8px;
   margin-bottom: 14px;
+  flex-wrap: wrap;
 }
 .card-title .icon {
   font-size: 18px;
@@ -335,6 +336,7 @@ function fileDcr() {
   border-radius: 12px;
   font-size: 14px;
   transition: all 0.2s ease;
+  flex-wrap: wrap;
 }
 .chip-emerald {
   background: rgba(16, 185, 129, 0.12);
@@ -349,6 +351,7 @@ function fileDcr() {
 .chip-title {
   flex: 1;
   font-weight: 500;
+  min-width: 140px;
 }
 .deadline-input {
   background: rgba(2, 6, 23, 0.5);
@@ -366,7 +369,7 @@ function fileDcr() {
 .add-row input {
   flex: 1;
   padding: 11px 14px;
-  font-size: 14px;
+  font-size: 15px;
 }
 .btn-add {
   padding: 0 18px;
@@ -376,6 +379,8 @@ function fileDcr() {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  min-height: 44px;
+  white-space: nowrap;
 }
 .btn-emerald {
   background: #10b981;
@@ -402,7 +407,8 @@ function fileDcr() {
   color: #94a3b8;
   font-size: 18px;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 4px 8px;
+  touch-action: manipulation;
 }
 .btn-remove:hover {
   color: #f43f5e;
@@ -435,17 +441,17 @@ function fileDcr() {
 .priority-row input {
   flex: 1;
   padding: 10px 14px;
-  font-size: 14px;
+  font-size: 15px;
 }
 .btn-ghost {
   background: rgba(99, 102, 241, 0.1);
   color: #818cf8;
   border: 1px dashed rgba(99, 102, 241, 0.3);
   border-radius: 12px;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -466,6 +472,7 @@ function fileDcr() {
   padding-bottom: 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 18px;
+  gap: 12px;
 }
 .needle-info {
   display: flex;
@@ -476,7 +483,7 @@ function fileDcr() {
   font-size: 24px;
 }
 .needle-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #ffffff;
 }
@@ -541,7 +548,7 @@ input:checked + .slider:before {
 .reflection-textarea {
   width: 100%;
   padding: 12px 14px;
-  font-size: 14px;
+  font-size: 15px;
   resize: vertical;
 }
 
@@ -552,10 +559,11 @@ input:checked + .slider:before {
 .big-submit-btn {
   width: 100%;
   padding: 16px;
-  font-size: 17px;
+  font-size: 16px;
   letter-spacing: 0.02em;
   border: none;
   cursor: pointer;
+  min-height: 52px;
 }
 
 /* Discipline Checklist */
@@ -600,6 +608,7 @@ input:checked + .slider:before {
   justify-content: center;
   gap: 4px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
 }
 .r5-button:hover {
   border-color: #818cf8;
@@ -627,6 +636,7 @@ input:checked + .slider:before {
   border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 .toggle-card input {
   display: none;
@@ -656,8 +666,31 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 640px) {
+  .dcr-page {
+    padding: 16px 12px;
+  }
+  .section-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+  .add-row {
+    flex-direction: column;
+  }
+  .btn-add {
+    width: 100%;
+  }
+  .page-title {
+    font-size: 22px;
+  }
   .disc-toggles {
     grid-template-columns: 1fr;
+  }
+  .dcr-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .status-badge {
+    align-self: flex-start;
   }
 }
 </style>

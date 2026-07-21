@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '../Layouts/AppLayout.vue'
 defineOptions({ layout: AppLayout })
-import { ref, reactive, computed } from 'vue'
+import { reactive, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 import VueApexCharts from 'vue3-apexcharts'
 
@@ -238,6 +238,8 @@ const onTarget = computed(() => props.kpis.filter(k => { const vr = variance(k);
   display: flex;
   align-items: center;
   position: relative;
+  flex: 1;
+  min-width: 140px;
 }
 .unit-symbol {
   position: absolute;
@@ -247,7 +249,7 @@ const onTarget = computed(() => props.kpis.filter(k => { const vr = variance(k);
 }
 .actual-input {
   padding-left: 28px !important;
-  width: 140px;
+  width: 100%;
   font-weight: 700;
   font-size: 15px;
 }
@@ -255,8 +257,9 @@ const onTarget = computed(() => props.kpis.filter(k => { const vr = variance(k);
 .variance-pill {
   font-size: 12px;
   font-weight: 700;
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 999px;
+  white-space: nowrap;
 }
 .pill-green {
   background: rgba(16, 185, 129, 0.15);
@@ -273,5 +276,30 @@ const onTarget = computed(() => props.kpis.filter(k => { const vr = variance(k);
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: hidden;
+}
+
+@media (max-width: 640px) {
+  .kpi-page {
+    padding: 16px 12px;
+  }
+  .kpi-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .status-badge {
+    align-self: flex-start;
+  }
+  .page-title {
+    font-size: 22px;
+  }
+  .kpi-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+  .kpi-input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 </style>
