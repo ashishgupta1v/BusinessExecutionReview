@@ -51,7 +51,7 @@ const toggleFaq = (index) => {
                 <Link href="/" class="nav-brand">
                     <div class="logo-icon">BET</div>
                     <div class="brand-info">
-                        <span class="brand-name">Business<b>Execution Toolkit</b></span>
+                        <span class="brand-name"><b> Business Execution Toolkit</b></span>
                         <span class="brand-sub">Operating System</span>
                     </div>
                 </Link>

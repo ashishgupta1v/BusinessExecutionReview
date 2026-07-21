@@ -32,7 +32,7 @@ class KanbanController extends Controller
 
         return Inertia::render('KanbanBoard', [
             'columns'   => $columns,
-            'staleDays' => (int) ($request->user()->currentWorkspace->settings['stale_task_days'] ?? 3),
+            'staleDays' => (int) ($request->user()->currentWorkspace?->settings['stale_task_days'] ?? 3),
         ]);
     }
 
@@ -45,6 +45,13 @@ class KanbanController extends Controller
 
         $board = $this->board();
         $col   = $board->columns->firstWhere('name', $this->names[$data['column']]);
+
+        if (! $col) {
+            $col = $board->columns()->create([
+                'name' => $this->names[$data['column']],
+                'position' => array_search($data['column'], array_keys($this->names)),
+            ]);
+        }
 
         KanbanCard::create([
             'column_id' => $col->id, 'board_id' => $board->id, 'title' => $data['title'],
@@ -75,6 +82,13 @@ class KanbanController extends Controller
         $board = $this->board();
         $col   = $board->columns->firstWhere('name', $this->names[$data['column']]);
 
+        if (! $col) {
+            $col = $board->columns()->create([
+                'name' => $this->names[$data['column']],
+                'position' => array_search($data['column'], array_keys($this->names)),
+            ]);
+        }
+
         DB::transaction(function () use ($data, $col) {
             foreach ($data['order'] as $row) {
                 $card = KanbanCard::find($row['id']);
@@ -98,11 +112,15 @@ class KanbanController extends Controller
         $board = KanbanBoard::with('columns')->first();
         if (! $board) {
             $board = KanbanBoard::create(['name' => 'Execution Board']);
-            foreach (array_values($this->names) as $i => $name) {
+        }
+
+        foreach (array_values($this->names) as $i => $name) {
+            if (! $board->columns->contains('name', $name)) {
                 $board->columns()->create(['name' => $name, 'position' => $i]);
             }
-            $board->load('columns');
         }
+
+        $board->load('columns');
         return $board;
     }
 }
