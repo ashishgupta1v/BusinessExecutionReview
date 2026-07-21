@@ -89,7 +89,7 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
       <header class="topbar">
         <div class="tb-left">
           <div class="logo-sm">BET</div>
-          <span class="tb-title">{{ current.name }}</span>
+          <span class="tb-title">Business Execution Toolkit</span>
         </div>
         <div class="tb-right">
           <div class="tb-streak">
@@ -458,6 +458,8 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
+    flex: 1;
   }
   .logo-sm {
     width: 30px;
@@ -468,10 +470,15 @@ const toggleMobileMenu = () => { mobileMenuOpen.value = !mobileMenuOpen.value }
     place-items: center;
     font-weight: 800;
     font-size: 11px;
+    flex-shrink: 0;
   }
   .tb-title {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
+    color: #f8fafc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .tb-right {
     display: flex;
